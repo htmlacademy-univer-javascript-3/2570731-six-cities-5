@@ -20,7 +20,7 @@ export default function CommentForm(): JSX.Element {
   };
 
   const [formData, setFormData] = useState(initialFormState);
-  console.log(formData);
+
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
     if(evt.target.type == 'radio') {
