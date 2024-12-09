@@ -4,7 +4,7 @@ import useMap from '../../hooks/use-map';
 import { defaultCustomIcon, currentCustomIcon } from './icons';
 import 'leaflet/dist/leaflet.css';
 import { City } from '../../types/city';
-import { Point, Points } from '../../types/point'
+import { Point, Points } from '../../types/point';
 
 type MapProps = {
   city: City;

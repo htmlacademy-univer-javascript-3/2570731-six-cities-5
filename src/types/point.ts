@@ -1,8 +1,8 @@
-import { Location } from './location'
+import { Location } from './location';
 
 type Point = {
-  title: string,
-  location: Location
+  title: string;
+  location: Location;
 }
 
 type Points = Point[];

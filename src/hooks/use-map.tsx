@@ -29,7 +29,7 @@ export default function useMap(
 
       instance.addLayer(layer);
       setMap(instance);
-      isRenderedRef.current = true
+      isRenderedRef.current = true;
     }
   }, [mapRef, location]);
   return map;

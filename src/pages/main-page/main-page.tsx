@@ -12,7 +12,7 @@ type MainPageProps = {
 
 export default function MainPage({ offers }: MainPageProps): JSX.Element {
   const [activeCardId, setActiveCardById] = useState<string | null>(null);
-  const [currentCity, setCurrentCity] = useState<City>(
+  const [currentCity,] = useState<City>(
     {
       name: 'Amsterdam',
       location:
@@ -24,7 +24,7 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
     }
   );
 
-  const selectedOffer = offers.find(offer => offer.id == activeCardId);
+  const selectedOffer = offers.find((offer) => offer.id === activeCardId);
 
   return (
     <div className="page page--gray page--main">
