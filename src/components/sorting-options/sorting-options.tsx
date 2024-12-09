@@ -30,15 +30,17 @@ export default function SortingOptions({ currentSortingOption, onSortingChange }
             <li
               className={`places__option ${currentSortingOption === option ? 'places__option--active' : ''}`}
               tabIndex={0}
+              key={option}
               onClick={() => {
-                onSortingChange(option)
+                onSortingChange(option);
                 setOptionsVisible(false);
-              }}>
+              }}
+            >
               {option}
             </li>
           ))
         }
       </ul>
     </form>
-  )
+  );
 }
