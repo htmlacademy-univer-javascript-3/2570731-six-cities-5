@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { AppRoute } from '../../const';
+import RatingBar from '../rating-bar/rating-bar';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -9,7 +10,6 @@ type PlaceCardProps = {
 }
 
 export default function PlaceCard({ offer, onMouseEnter, onMouseLeave }: PlaceCardProps): JSX.Element {
-  const perRatingUnitPercentage = 20;
   return (
     <article className="cities__card place-card"
       onMouseEnter={onMouseEnter}
@@ -39,12 +39,7 @@ export default function PlaceCard({ offer, onMouseEnter, onMouseLeave }: PlaceCa
             {offer.isFavorite && <span className="visually-hidden">To bookmarks</span>}
           </button>
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${offer.rating * perRatingUnitPercentage}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RatingBar className='place-card' rating={offer.rating} />
         <h2 className="place-card__name">
           <Link to={`${AppRoute.OfferBase}/${offer.id}`}>{offer.title}</Link>
         </h2>

@@ -1,13 +1,7 @@
 import { ChangeEvent, Fragment, useState } from 'react';
-import { CommentFormSettings } from '../../const';
+import { CommentFormSettings, Rating } from '../../const';
 
-const Rating = {
-  'Terriby': 1,
-  'Badly': 2,
-  'NotBad': 3,
-  'Good': 4,
-  'Perfect': 5,
-} as const;
+
 
 export default function CommentForm(): JSX.Element {
 
