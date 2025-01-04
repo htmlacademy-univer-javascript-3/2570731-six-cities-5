@@ -7,7 +7,6 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { OFFER_PAGE_MOCK } from '../../mocks/offer-page';
 
 export default function App(): JSX.Element {
 
@@ -33,7 +32,7 @@ export default function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferPage {...OFFER_PAGE_MOCK}/>}
+            element={<OfferPage />}
           />
           <Route
             path='*'
