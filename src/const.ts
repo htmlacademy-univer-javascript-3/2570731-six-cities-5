@@ -21,4 +21,8 @@ const MapSettings = {
   UrlMarkerCurrent: '/public/img/pin-active.svg'
 };
 
-export { AppRoute, AuthorizationStatus, CommentFormSettings, MapSettings };
+const APIRoute = {
+  Offers: '/offers'
+};
+
+export { AppRoute, AuthorizationStatus, CommentFormSettings, MapSettings, APIRoute };
