@@ -1,4 +1,3 @@
-import { Rating } from '../const';
 import { City } from './city';
 import { Location } from './location';
 
@@ -19,5 +18,5 @@ export type Offer = {
   location: Location;
   isFavorite: boolean;
   isPremium: boolean;
-  rating: typeof Rating[keyof typeof Rating];
+  rating: number;
 }

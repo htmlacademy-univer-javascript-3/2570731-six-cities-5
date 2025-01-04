@@ -1,11 +1,10 @@
-import { Rating } from '../../const'
-
 type RatingBarProps = {
-  className: string
-  rating: typeof Rating[keyof typeof Rating]
+  className: string;
+  rating: number;
+  showValue?: boolean;
 }
 
-export default function RatingBar({ className, rating } : RatingBarProps) {
+export default function RatingBar({ className, rating, showValue } : RatingBarProps) {
   const perRatingUnitPercentage = 20;
   return (
     <div className={`${className}__rating rating`}>
@@ -13,6 +12,9 @@ export default function RatingBar({ className, rating } : RatingBarProps) {
         <span style={{ width: `${rating * perRatingUnitPercentage}%` }} />
         <span className="visually-hidden">Rating</span>
       </div>
+      {
+        showValue && <span className={`${className}__rating-value rating__value`}>{rating}</span>
+      }
     </div>
-  )
+  );
 }

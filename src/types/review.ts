@@ -1,11 +1,11 @@
-import { Rating } from '../const';
+import { User } from './user';
 
 type Review = {
-  avatarSrc: string,
-  username: string,
-  rating: typeof Rating[keyof typeof Rating],
-  text: string,
-  reviewDate: Date,
+  id: string;
+  user: User;
+  rating: number;
+  comment: string;
+  date: Date;
 }
 
 export type { Review };

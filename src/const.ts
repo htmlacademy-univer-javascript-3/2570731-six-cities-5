@@ -21,12 +21,4 @@ const MapSettings = {
   UrlMarkerCurrent: '/public/img/pin-active.svg'
 };
 
-const Rating = {
-  'Terriby': 1,
-  'Badly': 2,
-  'NotBad': 3,
-  'Good': 4,
-  'Perfect': 5,
-} as const;
-
-export { AppRoute, AuthorizationStatus, CommentFormSettings, MapSettings, Rating };
+export { AppRoute, AuthorizationStatus, CommentFormSettings, MapSettings };
