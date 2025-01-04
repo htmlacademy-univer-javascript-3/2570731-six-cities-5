@@ -22,7 +22,9 @@ const MapSettings = {
 };
 
 const APIRoute = {
-  Offers: '/offers'
+  Offers: '/offers',
+  Login: '/login',
+  Logout: 'logout'
 };
 
 export { AppRoute, AuthorizationStatus, CommentFormSettings, MapSettings, APIRoute };
