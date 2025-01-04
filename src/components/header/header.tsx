@@ -9,7 +9,7 @@ export default function Header() {
   const dispatch = useAppDispatch();
   const offers = useAppSelector((state) => state.offers);
   const favoritesCount = offers.reduce((count, offer) => offer.isFavorite ? count + 1 : count, 0);
-  const isAuthorized = store.getState().authorizationStatus == AuthorizationStatus.Auth;
+  const isAuthorized = store.getState().authorizationStatus === AuthorizationStatus.Auth;
   const userData = useAppSelector((state) => state.userData);
 
   const handleLogout = () => {

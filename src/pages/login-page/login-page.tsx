@@ -8,8 +8,8 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { toast } from 'react-toastify';
 
 function validateFormData(email: string, password: string): boolean {
-  return (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)
-    && /^(?=.*?[a-zA-Z])(?=.*?[0-9])$/.test(password))
+  return (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)
+    && /^(?=.*?[a-zA-Z])(?=.*?[0-9])$/.test(password));
 }
 
 export default function LoginPage(): JSX.Element {
@@ -40,10 +40,10 @@ export default function LoginPage(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const formData = new FormData(evt.currentTarget);
+    const loginFormData = new FormData(evt.currentTarget);
 
-    const email = formData.get('email')?.toString();
-    const password = formData.get('password')?.toString();
+    const email = loginFormData.get('email')?.toString();
+    const password = loginFormData.get('password')?.toString();
 
     if (email && password && validateFormData(email, password)) {
       dispatch(loginAction(
@@ -55,9 +55,9 @@ export default function LoginPage(): JSX.Element {
       return;
     }
 
-    toast("Wrong email or password format!\n"
-        + "Password must contain latin letters and digits\n"
-        + "Email must be non empty and have correct format");
+    toast('Wrong email or password format!\n'
+        + 'Password must contain latin letters and digits\n'
+        + 'Email must be non empty and have correct format');
   };
 
   return (
