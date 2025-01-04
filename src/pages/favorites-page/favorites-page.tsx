@@ -3,6 +3,7 @@ import { Offer } from '../../types/offer';
 import OffersList from '../../components/offers-list/offers-list';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import FavoritesEmpty from './favorites-empty';
 
 function getFavoritesByCity(offers: Offer[]): Record<string, Offer[]> {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
@@ -15,8 +16,12 @@ function getFavoritesByCity(offers: Offer[]): Record<string, Offer[]> {
 }
 
 export default function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector((state) => state.favorites);
   const favoritesByCity = getFavoritesByCity(offers);
+
+  if(offers.length === 0) {
+    return <FavoritesEmpty />;
+  }
 
   return (
     <div className="page">

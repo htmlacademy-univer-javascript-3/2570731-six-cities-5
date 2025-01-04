@@ -8,8 +8,8 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { toast } from 'react-toastify';
 
 function validateFormData(email: string, password: string): boolean {
-  return (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)
-    && /^(?=.*?[a-zA-Z])(?=.*?[0-9])$/.test(password));
+  return (/^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/.test(email)
+    && /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]+$/.test(password));
 }
 
 export default function LoginPage(): JSX.Element {
@@ -40,10 +40,9 @@ export default function LoginPage(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const loginFormData = new FormData(evt.currentTarget);
 
-    const email = loginFormData.get('email')?.toString();
-    const password = loginFormData.get('password')?.toString();
+    const email = formData.email;
+    const password = formData.password;
 
     if (email && password && validateFormData(email, password)) {
       dispatch(loginAction(
