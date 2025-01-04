@@ -10,6 +10,8 @@ export const setCity = createAction<City>('data/setCity');
 
 export const loadOffers = createAction<Offer[]>('data/loadOffers');
 
+export const updateOffer = createAction<Offer>('data/updateOffer');
+
 export const loadOfferDetails = createAction<OfferDetails>('data/loadOfferDetails');
 
 export const loadOfferReviews = createAction<Review[]>('data/loadOfferReviews');
@@ -18,11 +20,15 @@ export const loadOffersNearby = createAction<Offer[]>('data/loadOffersNearby');
 
 export const setOfferDetailsLoadingStatus = createAction<boolean>('data/setOfferDetailsLoadingStatus');
 
+export const loadFavorites = createAction<Offer[]>('data/loadFavorites');
+
+export const setFavoritesLoadingStatus = createAction<boolean>('data/setFavoritesLoadingStatus');
+
 export const addOfferReview = createAction<Review>('data/addOfferReview');
 
 export const setUserData = createAction<UserData | null>('data/setUserData');
 
-export const setOffersDataLoadingStatus = createAction<boolean>('data/setQuestionsDataLoadingStatus');
+export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 

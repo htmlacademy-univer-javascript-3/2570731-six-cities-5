@@ -12,7 +12,7 @@ const Rating = {
 } as const;
 
 type CommentFormProps = {
-  offerId: string
+  offerId: string;
 };
 
 export default function CommentForm({ offerId }: CommentFormProps): JSX.Element {
@@ -48,12 +48,12 @@ export default function CommentForm({ offerId }: CommentFormProps): JSX.Element 
         isReviewBeingSent = false;
         setFormData(initialFormState);
       });
-  }
+  };
 
   const isFormDataValid =
     formData.review.length >= CommentFormSettings.CommentMinLength
     && formData.review.length <= CommentFormSettings.CommentMaxLength
-    && formData.rating != 0;
+    && formData.rating !== 0;
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>

@@ -30,6 +30,7 @@ const MapSettings = {
 const APIRoute = {
   Offers: '/offers',
   Comments: '/comments',
+  Favorites: '/favorite',
   Login: '/login',
   Logout: '/logout'
 };

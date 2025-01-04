@@ -13,12 +13,13 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import Spinner from '../../components/spinner/spinner';
 import { Navigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { fetchOfferDetails } from '../../store/api-actions';
+import { fetchOfferDetails, setFavoritesAction } from '../../store/api-actions';
 import { AppRoute, MAX_OFFERS_NEARBY_LOADED, MAX_REVIEWS_LOADED } from '../../const';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { offerId } = useParams();
+  const isFavoritesUpdated = useAppSelector((state) => state.isFavoritesLoading);
   const offer = useAppSelector((state) => state.offerDetails);
   const reviews = useAppSelector((state) => state.offerReviews);
   const filteredReviews = reviews
@@ -27,21 +28,22 @@ export default function OfferPage(): JSX.Element {
   const offersNearby = useAppSelector((state) => state.offersNearby).slice(0, MAX_OFFERS_NEARBY_LOADED);
   const isOfferDetailsLoading = useAppSelector((state) => state.isOfferDetailsLoading);
 
-  let requestInProgress = false;
+  const updateFavorites = (id: string, status: boolean) => {
+    dispatch(setFavoritesAction({offerId: id, status: status ? 0 : 1}));
+  };
+
   useEffect(() => {
     if (offerId) {
-      requestInProgress = true;
-      dispatch(fetchOfferDetails(offerId))
-        .finally(() => requestInProgress = false);
+      dispatch(fetchOfferDetails(offerId));
     }
-  }, [offerId]);
+  }, [offerId, isFavoritesUpdated]);
 
   if (isOfferDetailsLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
-  if (!isOfferDetailsLoading && !requestInProgress && offer === null) {
-    return <Navigate to={AppRoute.NotFound} />
+  if (!isOfferDetailsLoading && offer === null) {
+    return <Navigate to={AppRoute.NotFound} />;
   }
 
   return (
@@ -74,7 +76,7 @@ export default function OfferPage(): JSX.Element {
                 <h1 className="offer__name">
                   {offer!.title}
                 </h1>
-                <Bookmark className="offer" width={31} height={33} isFavorite={offer!.isFavorite} />
+                <Bookmark className="offer" width={31} height={33} isFavorite={offer!.isFavorite} onClick={() => updateFavorites(offer!.id, offer!.isFavorite)}/>
               </div>
               <RatingBar className='offer' rating={offer!.rating} showValue />
               <ul className="offer__features">
