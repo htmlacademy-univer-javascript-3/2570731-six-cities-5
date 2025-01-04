@@ -49,6 +49,8 @@ export default function MainPage(): JSX.Element {
                 onSortingChange={(sortingOption) => setSortingOption(sortingOption)}
               />
               <OffersList
+                className="cities__places-list tabs__content"
+                cardClassName="cities"
                 offers={sortedOffers}
                 onCardHover={setActiveCardById}
                 onCardLeave={() => setActiveCardById(null)}
@@ -56,6 +58,7 @@ export default function MainPage(): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
+                className='cities'
                 city={currentCity}
                 points={offersForCurrentCity}
                 selectedPoint={selectedOffer}
