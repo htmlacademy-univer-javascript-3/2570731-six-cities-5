@@ -39,7 +39,13 @@ export default function FavoritesPage(): JSX.Element {
                         </a>
                       </div>
                     </div>
-                    <OffersList offers={favorites} onCardHover={() => {}} onCardLeave={() => {}} />
+                    <OffersList
+                      offers={favorites}
+                      className='favorites__places'
+                      cardClassName='favorites'
+                      onCardHover={() => {}}
+                      onCardLeave={() => {}}
+                    />
                   </li>
                 ))
               }

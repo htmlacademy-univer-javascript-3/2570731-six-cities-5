@@ -104,7 +104,7 @@ export default function OfferPage({ offer, reviews, offersNearby }: OfferPagePro
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OffersList
-              className="near-places__list"
+              className="near-places__list places__list"
               cardClassName="near-places"
               offers={offersNearby}
               onCardHover={setActiveCardId}

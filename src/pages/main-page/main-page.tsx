@@ -56,7 +56,7 @@ export default function MainPage(): JSX.Element {
                 onSortingChange={(sortingOption) => setSortingOption(sortingOption)}
               />
               <OffersList
-                className="cities__places-list tabs__content"
+                className="cities__places-list places__list tabs__content"
                 cardClassName="cities"
                 offers={sortedOffers}
                 onCardHover={setActiveCardById}
