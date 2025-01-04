@@ -7,14 +7,9 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { setOffers } from '../../store/action';
-import { offersMock } from '../../mocks/offers';
 import { OFFER_PAGE_MOCK } from '../../mocks/offer-page';
 
 export default function App(): JSX.Element {
-  const dispatch = useAppDispatch();
-  dispatch(setOffers(offersMock));
 
   return (
     <HelmetProvider>

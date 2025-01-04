@@ -2,8 +2,10 @@ import { createAction } from '@reduxjs/toolkit';
 import { City } from '../types/city';
 import { Offer } from '../types/offer';
 
-const setCity = createAction('setCity', ((city: City) => ({payload: city})));
+const setCity = createAction<City>('data/setCity');
 
-const setOffers = createAction('setOffers', ((offers: Offer[]) => ({payload: offers})));
+const loadOffers = createAction<Offer[]>('data/loadOffers');
 
-export {setCity, setOffers};
+const setOffersDataLoadingStatus = createAction<boolean>('data/setQuestionsDataLoadingStatus');
+
+export {setCity, loadOffers, setOffersDataLoadingStatus};
