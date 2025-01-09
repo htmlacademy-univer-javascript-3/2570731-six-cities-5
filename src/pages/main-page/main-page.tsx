@@ -14,6 +14,8 @@ import { getActiveCity } from '../../store/slices/application-data/selectors';
 import { getIsOffersLoading, getOffers } from '../../store/slices/offers-data/selectors';
 import { setActiveCity } from '../../store/slices/application-data/application-data';
 import SortingOptions from './components/sorting-options/sorting-options';
+import OffersListEmpty from './components/offers-list-empty/offers-list-empty';
+import classNames from 'classnames';
 
 export default function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardById] = useState<string | null>(null);
@@ -27,7 +29,7 @@ export default function MainPage(): JSX.Element {
   const selectedOffer = offersForCurrentCity.find((offer) => offer.id === activeCardId);
   const isOffersDataLoading = useAppSelector(getIsOffersLoading);
 
-  if(isOffersDataLoading && isFirstFetch.current) {
+  if (isOffersDataLoading && isFirstFetch.current) {
     isFirstFetch.current = false;
     return (
       <Spinner />
@@ -41,7 +43,12 @@ export default function MainPage(): JSX.Element {
       </Helmet>
       <Header />
 
-      <main className="page__main page__main--index">
+      <main className={classNames(
+        'page__main',
+        'page__main--index',
+        { 'page__main--index-empty': offers.length === 0 }
+      )}
+      >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CitiesList
@@ -51,31 +58,32 @@ export default function MainPage(): JSX.Element {
           />
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersForCurrentCity.length} places to stay in {currentCity.name}</b>
-              <SortingOptions
-                currentSortingOption={currentSortingOption}
-                onSortingChange={(sortingOption) => setSortingOption(sortingOption)}
-              />
-              <OffersList
-                className="cities__places-list places__list tabs__content"
-                cardClassName="cities"
-                offers={sortedOffers}
-                onCardHover={setActiveCardById}
-                onCardLeave={() => setActiveCardById(null)}
-              />
-            </section>
-            <div className="cities__right-section">
-              <Map
-                className='cities'
-                city={currentCity}
-                points={offersForCurrentCity}
-                selectedPoint={selectedOffer}
-              />
-            </div>
-          </div>
+          {offers.length === 0 ? <OffersListEmpty cityName={currentCity.name} /> :
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{offersForCurrentCity.length} places to stay in {currentCity.name}</b>
+                <SortingOptions
+                  currentSortingOption={currentSortingOption}
+                  onSortingChange={(sortingOption) => setSortingOption(sortingOption)}
+                />
+                <OffersList
+                  className="cities__places-list places__list tabs__content"
+                  cardClassName="cities"
+                  offers={sortedOffers}
+                  onCardHover={setActiveCardById}
+                  onCardLeave={() => setActiveCardById(null)}
+                />
+              </section>
+              <div className="cities__right-section">
+                <Map
+                  className='cities'
+                  city={currentCity}
+                  points={offersForCurrentCity}
+                  selectedPoint={selectedOffer}
+                />
+              </div>
+            </div>}
         </div>
       </main>
     </div>
