@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types/offer';
 import { AppRoute } from '../../const';
 import RatingBar from '../rating-bar/rating-bar';
 import Bookmark from '../bookmark/bookmark';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { setFavoritesAction } from '../../store/api-actions';
+import { setFavoriteAction } from '../../store/api-actions/offer-api-actions';
+import { OfferPreview } from '../../types/offer';
+import { FavoritesActionType } from '../../types/favorites-action-type';
 
 type PlaceCardProps = {
-  offer: Offer;
+  offer: OfferPreview;
   className: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
@@ -16,14 +17,19 @@ type PlaceCardProps = {
 export default function PlaceCard({ offer, className, onMouseEnter, onMouseLeave }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const updateFavorites = (offerId: string, status: boolean) => {
-    dispatch(setFavoritesAction({ offerId, status: status ? 0 : 1 }));
+  const updateFavorites = (offerId: string, isFavorite: boolean) => {
+    dispatch(setFavoriteAction(
+      {
+        offerId,
+        actionType: isFavorite ? FavoritesActionType.Remove : FavoritesActionType.Add
+      }
+    ));
   };
 
   return (
     <article className={`${className}__card place-card`}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={() => onMouseEnter ? onMouseEnter() : null}
+      onMouseLeave={() => onMouseLeave ? onMouseLeave() : null}
     >
       {
         offer.isPremium &&

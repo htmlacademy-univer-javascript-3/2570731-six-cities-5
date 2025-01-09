@@ -1,7 +1,7 @@
-import { Offer } from '../types/offer';
+import { OfferPreview } from '../types/offer';
 import { SortingOption } from '../types/sorting-option';
 
-export default function sortOffersByOption(offers: Offer[], option: SortingOption): Offer[] {
+export default function sortOffersByOption(offers: OfferPreview[], option: SortingOption): OfferPreview[] {
   switch(option) {
     case SortingOption.Popular:
       return [...offers];
