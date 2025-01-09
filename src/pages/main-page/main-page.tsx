@@ -1,30 +1,34 @@
 import { Helmet } from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
-import Header from '../../components/header/header';
+import { Header } from '../../components/header/header';
 import Map from '../../components/map/map';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import CitiesList from '../../components/cities-list/cities-list';
+import CitiesList from './components/cities-list/cities-list';
 import { City } from '../../types/city';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { setCity } from '../../store/action';
-import SortingOptions from '../../components/sorting-options/sorting-options';
 import { SortingOption } from '../../types/sorting-option';
 import sortOffersByOption from '../../utils/offer';
 import Spinner from '../../components/spinner/spinner';
+import { getActiveCity } from '../../store/slices/application-data/selectors';
+import { getIsOffersLoading, getOffers } from '../../store/slices/offers-data/selectors';
+import { setActiveCity } from '../../store/slices/application-data/application-data';
+import SortingOptions from './components/sorting-options/sorting-options';
 
 export default function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardById] = useState<string | null>(null);
   const [currentSortingOption, setSortingOption] = useState<SortingOption>(SortingOption.Popular);
+  const isFirstFetch = useRef(true);
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
   const offersForCurrentCity = offers.filter((offer) => offer.city.name === currentCity.name);
   const sortedOffers = sortOffersByOption(offersForCurrentCity, currentSortingOption);
   const selectedOffer = offersForCurrentCity.find((offer) => offer.id === activeCardId);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getIsOffersLoading);
 
-  if(isOffersDataLoading) {
+  if(isOffersDataLoading && isFirstFetch.current) {
+    isFirstFetch.current = false;
     return (
       <Spinner />
     );
@@ -43,7 +47,7 @@ export default function MainPage(): JSX.Element {
           <CitiesList
             cities={Object.values(City)}
             selectedCity={currentCity}
-            onSelectChange={(selectedCity) => dispatch(setCity(selectedCity))}
+            onSelectChange={(selectedCity) => dispatch(setActiveCity(selectedCity))}
           />
         </div>
         <div className="cities">

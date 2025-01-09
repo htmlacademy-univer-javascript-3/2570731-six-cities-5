@@ -1,12 +1,12 @@
-import { Offer } from '../../types/offer';
+import { OfferPreview } from '../../types/offer';
 import PlaceCard from '../place-card/place-card';
 
 type OffersListProps = {
   className: string;
   cardClassName: string;
-  offers: Offer[];
-  onCardHover: (cardId: string) => void;
-  onCardLeave: () => void;
+  offers: OfferPreview[];
+  onCardHover?: (cardId: string) => void;
+  onCardLeave?: () => void;
 }
 
 export default function OffersList({ className, cardClassName, offers, onCardHover, onCardLeave }: OffersListProps) {
@@ -15,8 +15,8 @@ export default function OffersList({ className, cardClassName, offers, onCardHov
       {offers.map((offer) => (
         <PlaceCard className={cardClassName} key={offer.id}
           offer={offer}
-          onMouseEnter={() => onCardHover(offer.id)}
-          onMouseLeave={() => onCardLeave()}
+          onMouseEnter={() => onCardHover ? onCardHover(offer.id) : null}
+          onMouseLeave={() => onCardLeave ? onCardLeave() : null}
         />
       ))}
     </div>
