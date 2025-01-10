@@ -13,3 +13,8 @@ export default function sortOffersByOption(offers: OfferPreview[], option: Sorti
       return offers.sort((a,b) => b.rating - a.rating);
   }
 }
+
+export function getOfferStarRating(rating: number): number {
+  const PER_RATING_UNIT_PERCENTAGE = 20;
+  return Math.round(rating) * PER_RATING_UNIT_PERCENTAGE;
+}

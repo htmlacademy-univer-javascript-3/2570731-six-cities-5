@@ -28,6 +28,7 @@ export const favoritesData = createSlice({
     });
     builder.addCase(fetchFavoritesAction.fulfilled, (state, action) => {
       state.favorites = action.payload;
+      state.isFavoritesLoading = false;
     });
     builder.addCase(fetchFavoritesAction.rejected, (state) => {
       state.isFavoritesLoading = false;

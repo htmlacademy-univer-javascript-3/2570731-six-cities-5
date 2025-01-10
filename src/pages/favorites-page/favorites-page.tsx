@@ -5,8 +5,13 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import FavoritesEmpty from './favorites-empty';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
-import { getFavorites } from '../../store/slices/favorites-data/selectors';
+import { getFavorites, getIsFavoritesLoading } from '../../store/slices/favorites-data/selectors';
 import { OfferPreview } from '../../types/offer';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useMemo } from 'react';
+import { fetchFavoritesAction } from '../../store/api-actions/offer-api-actions';
+import Spinner from '../../components/spinner/spinner';
+import { PlaceCardOptions } from '../../components/place-card/place-card-options';
 
 function getFavoritesByCity(offers: OfferPreview[]): Record<string, OfferPreview[]> {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
@@ -19,8 +24,18 @@ function getFavoritesByCity(offers: OfferPreview[]): Record<string, OfferPreview
 }
 
 export default function FavoritesPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const offers = useAppSelector(getFavorites);
   const favoritesByCity = getFavoritesByCity(offers);
+  const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
+
+  useMemo(() => {
+    dispatch(fetchFavoritesAction());
+  }, []);
+
+  if(isFavoritesLoading) {
+    return <Spinner />;
+  }
 
   if (offers.length === 0) {
     return <FavoritesEmpty />;
@@ -48,6 +63,7 @@ export default function FavoritesPage(): JSX.Element {
                       </div>
                     </div>
                     <OffersList
+                      options={PlaceCardOptions.Favorite}
                       offers={favorites}
                       className='favorites__places'
                       cardClassName='favorites'

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { City } from '../../../types/city';
 import { ApplicationData } from '../../../types/state';
-import { NameSpace } from '../../../const';
+import { Cities, NameSpace } from '../../../const';
 
 const initialState: ApplicationData = {
-  activeCity: City.Paris
+  activeCity: Cities.Paris
 };
 
 export const applicationData = createSlice({

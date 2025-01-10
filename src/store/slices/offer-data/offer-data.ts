@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { OfferDetailsData } from '../../../types/state';
 import { NameSpace } from '../../../const';
 import { fetchOfferDetailsAction, setFavoriteAction } from '../../api-actions/offer-api-actions';
+import { logoutAction } from '../../api-actions/user-api-actions';
 
 const initialState: OfferDetailsData = {
   offerDetails: null,
@@ -30,6 +31,11 @@ export const offerData = createSlice({
       const updatedOffer = action.payload;
       if(state.offerDetails?.id === updatedOffer.id) {
         state.offerDetails = updatedOffer;
+      }
+    });
+    builder.addCase(logoutAction.fulfilled, (state) => {
+      if(state.offerDetails) {
+        state.offerDetails.isFavorite = false;
       }
     });
   }

@@ -1,3 +1,5 @@
+import { City, CityName } from './types/city';
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -18,9 +20,11 @@ export const CommentFormSettings = {
   CommentMaxLength: 300
 };
 
-export const MAX_REVIEWS_LOADED = 10;
-
-export const MAX_OFFERS_NEARBY_LOADED = 3;
+export const OfferDetailsPageSettings = {
+  MaxReviewsLoaded: 10,
+  MaxOffersNearbyDisplayed: 3,
+  MaxOfferImagesDisplayed: 6
+};
 
 export const MapSettings = {
   UrlMarkerDefault: '/img/pin.svg',
@@ -44,3 +48,55 @@ export enum NameSpace {
   Reviews = 'Reviews',
   NearbyOffers = 'NearbyOffers'
 }
+
+
+export const Cities: Record<CityName, City> = {
+  Paris: {
+    name: 'Paris',
+    location: {
+      latitude: 48.85661,
+      longitude: 2.351499,
+      zoom: 13
+    }
+  },
+  Cologne: {
+    name: 'Cologne',
+    location: {
+      latitude: 50.938361,
+      longitude: 6.959974,
+      zoom: 13
+    }
+  },
+  Brussels: {
+    name: 'Brussels',
+    location: {
+      latitude: 50.846557,
+      longitude: 4.351697,
+      zoom: 13
+    }
+  },
+  Amsterdam: {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.37454,
+      longitude: 4.897976,
+      zoom: 13
+    }
+  },
+  Hamburg: {
+    name: 'Hamburg',
+    location: {
+      latitude: 53.550341,
+      longitude: 10.000654,
+      zoom: 13
+    }
+  },
+  Dusseldorf: {
+    name: 'Dusseldorf',
+    location: {
+      latitude: 51.225402,
+      longitude: 6.776314,
+      zoom: 13
+    }
+  }
+} as const;

@@ -12,8 +12,8 @@ export type UserCredentials = {
 }
 
 export type AuthInfo = User & {
-  'email': string;
-  'token': Token;
+  email: string;
+  token: Token;
 }
 
 export type AuthCheckResult = {
