@@ -7,6 +7,7 @@ import { redirectToRoute } from '../action';
 import { fetchOffersAction } from './offers-api-actions';
 import { fetchFavoritesAction } from './offer-api-actions';
 import { AuthCheckResult, AuthInfo, UserCredentials } from '../../types/user';
+import { StatusCodes } from 'http-status-codes';
 
 export const checkAuthAction = createAsyncThunk<AuthCheckResult, undefined, {
   dispatch: AppDispatch;
@@ -20,7 +21,7 @@ export const checkAuthAction = createAsyncThunk<AuthCheckResult, undefined, {
       dispatch(fetchFavoritesAction());
       return { isAuthorized: true, authInfo: data };
     } catch (error) {
-      if (axios.isAxiosError(error) && error?.response?.status === 401) {
+      if (axios.isAxiosError(error) && error?.response?.status === StatusCodes.UNAUTHORIZED) {
         return { isAuthorized: false, authInfo: null };
       }
       throw error;
@@ -37,6 +38,7 @@ export const loginAction = createAsyncThunk<AuthInfo, UserCredentials, {
   async ({ login: email, password }, { dispatch, extra: api }) => {
     const { data } = await api.post<AuthInfo>(APIRoute.Login, { email, password });
     saveToken(data.token);
+    dispatch(fetchOffersAction());
     dispatch(fetchFavoritesAction());
     dispatch(redirectToRoute(AppRoute.Root));
     return data;

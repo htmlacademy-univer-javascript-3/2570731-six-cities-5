@@ -1,11 +1,12 @@
 import { memo, useEffect, useRef } from 'react';
 import OffersList from '../../../../components/offers-list/offers-list';
 import Spinner from '../../../../components/spinner/spinner';
-import { MAX_OFFERS_NEARBY_LOADED } from '../../../../const';
+import { OfferDetailsPageSettings } from '../../../../const';
 import { useAppDispatch } from '../../../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../../../hooks/use-app-selector';
 import { getIsNearbyOffersLoading, getNearbyOffers } from '../../../../store/slices/nearby-offers-data/selectors';
 import { fetchNearbyOffersAction } from '../../../../store/api-actions/offer-api-actions';
+import { PlaceCardOptions } from '../../../../components/place-card/place-card-options';
 
 type NearbyOffersProps = {
   offerId: string;
@@ -32,13 +33,14 @@ function NearbyOffersComponent({ offerId }: NearbyOffersProps): JSX.Element {
 
   const filteredOffers = offers
     .toSorted((a, b) => a.id.localeCompare(b.id))
-    .slice(0, MAX_OFFERS_NEARBY_LOADED);
+    .slice(0, OfferDetailsPageSettings.MaxOffersNearbyDisplayed);
 
   return (
     <div className="container">
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <OffersList
+          options={PlaceCardOptions.Offer}
           className="near-places__list places__list"
           cardClassName="near-places"
           offers={filteredOffers}

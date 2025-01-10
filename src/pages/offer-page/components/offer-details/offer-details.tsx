@@ -12,7 +12,7 @@ import { useAppSelector } from '../../../../hooks/use-app-selector';
 import { getIsOfferDetailsLoading, getOfferDetails } from '../../../../store/slices/offer-data/selectors';
 import Spinner from '../../../../components/spinner/spinner';
 import { getNearbyOffers } from '../../../../store/slices/nearby-offers-data/selectors';
-import { AuthorizationStatus, MAX_OFFERS_NEARBY_LOADED } from '../../../../const';
+import { AuthorizationStatus, OfferDetailsPageSettings } from '../../../../const';
 import { getAuthoriztionStatus } from '../../../../store/slices/user-data/selectors';
 import { FavoritesActionType } from '../../../../types/favorites-action-type';
 import capitalize from '../../../../utils/strings';
@@ -28,6 +28,10 @@ function OfferDetailsComponent({ offerId }: OfferDetailsProps): JSX.Element {
   const offer = useAppSelector(getOfferDetails);
   const offersNearby = useAppSelector(getNearbyOffers);
   const isOfferDetailsLoading = useAppSelector(getIsOfferDetailsLoading);
+
+  const filteredNearbyOffers = offersNearby
+    .toSorted((a, b) => a.id.localeCompare(b.id))
+    .slice(0, OfferDetailsPageSettings.MaxOffersNearbyDisplayed);
 
   useEffect(() => {
     if (!didMount.current) {
@@ -61,7 +65,7 @@ function OfferDetailsComponent({ offerId }: OfferDetailsProps): JSX.Element {
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
           {
-            offer.images.map((imageUrl) => (
+            offer.images.slice(0, OfferDetailsPageSettings.MaxOfferImagesDisplayed).map((imageUrl) => (
               <div className="offer__image-wrapper" key={imageUrl}>
                 <img className="offer__image" src={imageUrl} alt="Photo studio" />
               </div>
@@ -124,7 +128,7 @@ function OfferDetailsComponent({ offerId }: OfferDetailsProps): JSX.Element {
           </section>
         </div>
       </div>
-      <Map className="offer" city={offer.city} points={[offer, ...offersNearby.toSorted((a, b) => a.id.localeCompare(b.id)).slice(0, MAX_OFFERS_NEARBY_LOADED)]} selectedPoint={offer} />
+      <Map className="offer" cityLocation={offer.city.location} points={[offer, ...filteredNearbyOffers]} selectedPointId={offer.id} />
     </section>
   );
 }

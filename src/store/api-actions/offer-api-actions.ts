@@ -5,6 +5,7 @@ import { Offer, OfferPreview } from '../../types/offer';
 import { APIRoute } from '../../const';
 import { Review } from '../../types/review';
 import { FavoritesActionType } from '../../types/favorites-action-type';
+import { toast } from 'react-toastify';
 
 export const fetchOfferDetailsAction = createAsyncThunk<Offer, string, {
   dispatch: AppDispatch;
@@ -49,9 +50,15 @@ export const sendReviewAction = createAsyncThunk<Review, { offerId: string; rati
 }>(
   'data/sendReview',
   async (review, { dispatch, extra: api }) => {
-    const { data } = await api.post<Review>(`${APIRoute.Comments}/${review.offerId}`, { rating: review.rating, comment: review.comment });
-    dispatch(fetchReviewsAction(review.offerId));
-    return data;
+    try {
+      const { data } = await api.post<Review>(`${APIRoute.Comments}/${review.offerId}`, { rating: review.rating, comment: review.comment });
+      dispatch(fetchReviewsAction(review.offerId));
+      return data;
+    } catch(error) {
+      toast('Failed to send review!');
+      throw error;
+    }
+
   },
 );
 
@@ -73,8 +80,9 @@ export const setFavoriteAction = createAsyncThunk<Offer, { offerId: string; acti
   extra: AxiosInstance;
 }>(
   'data/setFavorite',
-  async ({ offerId, actionType }, { extra: api }) => {
+  async ({ offerId, actionType }, { dispatch, extra: api }) => {
     const { data } = await api.post<Offer>(`${APIRoute.Favorites}/${offerId}/${actionType}`);
+    dispatch(fetchFavoritesAction());
     return data;
   },
 );

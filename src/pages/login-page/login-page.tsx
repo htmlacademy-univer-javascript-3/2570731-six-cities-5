@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, Cities } from '../../const';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ChangeEvent, FormEvent, useCallback, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
@@ -7,7 +7,6 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { toast } from 'react-toastify';
 import { getAuthoriztionStatus } from '../../store/slices/user-data/selectors';
 import { loginAction } from '../../store/api-actions/user-api-actions';
-import { City } from '../../types/city';
 import { getRandom } from '../../utils/number';
 import { setActiveCity } from '../../store/slices/application-data/application-data';
 
@@ -21,7 +20,7 @@ export default function LoginPage(): JSX.Element {
   const navigate = useNavigate();
   const authStatus = useAppSelector(getAuthoriztionStatus);
   const [formData, setFormData] = useState({email: '', password: ''});
-  const [cityName, city] = Object.entries(City)[getRandom(0, Object.entries(City).length - 1)];
+  const [cityName, city] = Object.entries(Cities)[getRandom(0, Object.entries(Cities).length - 1)];
   const cityEntry = useRef({cityName, city});
 
   const handleClickOnCityLabel = useCallback(() => {

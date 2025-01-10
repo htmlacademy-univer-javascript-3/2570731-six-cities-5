@@ -46,8 +46,8 @@ export const userData = createSlice({
       state.isAuthBeingChecked = false;
     });
     builder.addCase(logoutAction.fulfilled, (state) => {
-      state.authorizationStatus = AuthorizationStatus.NoAuth;
       state.authInfo = null;
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
     });
   }
 });
